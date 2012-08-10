@@ -3,12 +3,13 @@ use base 'TAP::Formatter::Console';
 
 use strict;
 use Time::HiRes qw( gettimeofday tv_interval );
+use POSIX qw( strftime );
 
 our $VERSION = '0.01';
 
 sub new {
     my $class = shift;
-    my $self = $class->SUPER::new(@_);
+    my $self  = $class->SUPER::new(@_);
 
     $self->{'_t0'} = [ gettimeofday() ];
     $self->{'_t1'} = $self->{'_t0'};
@@ -20,12 +21,14 @@ sub _output {
     my ( $self, $line ) = @_;
 
     if ( $line =~ /^(?:not )?ok / ) {
-        $line =~ s{$}{
-            sprintf ' [%s, %.2f, %.2f elapsed]',
-            scalar localtime,
-            tv_interval($self->{'_t1'}),
-            tv_interval($self->{'_t0'})
-        }e;
+        my $format = defined $ENV{'TAP_ELAPSED_FORMAT'}
+            ? $ENV{'TAP_ELAPSED_FORMAT'}
+            : ' [%c, %t0, %t1 elapsed]';
+
+        $format =~ s{%t0}{ sprintf '%.2f', tv_interval($self->{'_t0'}) }eg;
+        $format =~ s{%t1}{ sprintf '%.2f', tv_interval($self->{'_t1'}) }eg;
+
+        $line .= strftime( $format, localtime );
 
         $self->{'_t1'} = [ gettimeofday() ];
     }
