@@ -22,7 +22,7 @@ sub _output {
 
     return unless defined $line;
 
-    if ( $line =~ /^(?:not )?ok / ) {
+    if ( $line =~ /^(?:not )?ok \d/ ) {
         my $format = defined $ENV{'TAP_ELAPSED_FORMAT'}
             ? $ENV{'TAP_ELAPSED_FORMAT'}
             : ' [%c, %t0, %t1 elapsed]';
