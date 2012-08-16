@@ -48,7 +48,11 @@ TAP::Formatter::Elapsed - Display time taken for each test
 
 =head1 SYNOPSIS
 
-B<prove> --formatter I<TAP::Formatter::Elapsed> ...
+=over
+
+B<prove> --formatter I<TAP::Formatter::Elapsed> -v ...
+
+=back
 
 =head1 AUTHOR
 
