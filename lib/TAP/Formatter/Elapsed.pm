@@ -25,7 +25,7 @@ sub _output {
     if ( $line =~ /^(?:not )?ok \d/ ) {
         my $format = defined $ENV{'TAP_ELAPSED_FORMAT'}
             ? $ENV{'TAP_ELAPSED_FORMAT'}
-            : ' [%c, %t0, %t1 elapsed]';
+            : ' [%FT%T, %t0, %t1 elapsed]';
 
         $format =~ s{%t0}{ sprintf '%.2f', tv_interval($self->{'_t0'}) }eg;
         $format =~ s{%t1}{ sprintf '%.2f', tv_interval($self->{'_t1'}) }eg;
