@@ -20,6 +20,8 @@ sub new {
 sub _output {
     my ( $self, $line ) = @_;
 
+    return unless defined $line;
+
     if ( $line =~ /^(?:not )?ok / ) {
         my $format = defined $ENV{'TAP_ELAPSED_FORMAT'}
             ? $ENV{'TAP_ELAPSED_FORMAT'}
