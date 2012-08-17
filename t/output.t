@@ -9,34 +9,28 @@ my $formatter = TAP::Formatter::Elapsed->new;
 isa_ok $formatter, 'TAP::Formatter::Elapsed';
 isa_ok $formatter, 'TAP::Formatter::Console';
 
-my $output;
-
 delete $ENV{'TAP_ELAPSED_FORMAT'};
 
 # These lines shouldn't be modified.
 
-$output = capture_output( $formatter, '# does not add a timestamp' );
-is $output, '# does not add a timestamp', 'no change';
-
-$output = capture_output( $formatter, 'ok     34 ms' );
-is $output, 'ok     34 ms', 'no change';
+is capture_output( $formatter, '# no timestamp' ), '# no timestamp', 'no change';
+is capture_output( $formatter, 'ok     34 ms' ),   'ok     34 ms',   'no change';
 
 # Test the default format.
 
-my $default = qr/ \[\d\d\d\d-\d\d-\d\dT\d\d:\d\d:\d\d, \d\.\d\d, \d\.\d\d elapsed\]$/;
+my $expected = qr/ \[\d\d\d\d-\d\d-\d\dT\d\d:\d\d:\d\d, \d\.\d\d, \d\.\d\d elapsed\]$/;
 
-$output = capture_output( $formatter, 'ok 1' );
-like $output, qr/^ok 1 \[/, 'ok 1';
-like $output, $default, 'default format';
+like capture_output( $formatter, 'ok 1' ),     qr/^ok 1$expected/,     'default format';
+like capture_output( $formatter, 'not ok 2' ), qr/^not ok 2$expected/, 'default format';
 
-$output = capture_output( $formatter, 'not ok 2' );
-like $output, qr/^not ok 2 \[/, 'not ok 2';
-like $output, $default, 'default format';
+# Test that setting the environment variable works.
 
-# Now that we've tested the default format, use a format more easily parsed
-# for testing.
+$ENV{'TAP_ELAPSED_FORMAT'} = ' %t0 %t1';
 
-$ENV{'TAP_ELAPSED_FORMAT'} = 'TODO';
+$expected = qr/ \d\.\d\d \d\.\d\d$/;
+
+like capture_output( $formatter, 'ok 3' ),     qr/^ok 3$expected/,     'alternative format';
+like capture_output( $formatter, 'not ok 4' ), qr/^not ok 4$expected/, 'alternative format';
 
 done_testing;
 
