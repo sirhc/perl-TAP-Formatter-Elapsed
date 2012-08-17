@@ -18,19 +18,19 @@ is capture_output( $formatter, 'ok     34 ms' ),   'ok     34 ms',   'no change'
 
 # Test the default format.
 
-my $expected = qr/ \[\d\d\d\d-\d\d-\d\dT\d\d:\d\d:\d\d, \d\.\d\d, \d\.\d\d elapsed\]$/;
+my $expected = qr/\[\d\d\d\d-\d\d-\d\dT\d\d:\d\d:\d\d, \d\.\d\d, \d\.\d\d elapsed\]$/;
 
-like capture_output( $formatter, 'ok 1' ),     qr/^ok 1$expected/,     'default format';
-like capture_output( $formatter, 'not ok 2' ), qr/^not ok 2$expected/, 'default format';
+like capture_output( $formatter, 'ok 1' ),     qr/^ok 1 $expected/,     'default format';
+like capture_output( $formatter, 'not ok 2' ), qr/^not ok 2 $expected/, 'default format';
 
 # Test that setting the environment variable works.
 
-$ENV{'TAP_ELAPSED_FORMAT'} = ' %t0 %t1';
+$ENV{'TAP_ELAPSED_FORMAT'} = '%t0 %t1';
 
-$expected = qr/ \d\.\d\d \d\.\d\d$/;
+$expected = qr/\d\.\d\d \d\.\d\d$/;
 
-like capture_output( $formatter, 'ok 3' ),     qr/^ok 3$expected/,     'alternative format';
-like capture_output( $formatter, 'not ok 4' ), qr/^not ok 4$expected/, 'alternative format';
+like capture_output( $formatter, 'ok 3' ),     qr/^ok 3 $expected/,     'alternative format';
+like capture_output( $formatter, 'not ok 4' ), qr/^not ok 4 $expected/, 'alternative format';
 
 done_testing;
 
