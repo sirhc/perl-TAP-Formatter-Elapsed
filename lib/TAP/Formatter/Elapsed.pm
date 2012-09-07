@@ -5,7 +5,7 @@ use strict;
 use Time::HiRes qw( gettimeofday tv_interval );
 use POSIX qw( strftime );
 
-our $VERSION = '0.01';
+our $VERSION = '0.01_01';
 
 sub new {
     my $class = shift;
@@ -48,7 +48,7 @@ TAP::Formatter::Elapsed - Display time taken for each test
 
 =head1 VERSION
 
-This document describes version 0.01 of C<TAP::Formatter::Elapsed>
+This document describes version 0.01_01 of C<TAP::Formatter::Elapsed>
 
 =head1 SYNOPSIS
 
@@ -111,10 +111,10 @@ since the last test result.
 
 Setting this environment variable controls the format used by
 C<TAP::Formatter::Elapsed> when appending a time stamp to a test result.  The
-default value is C<[%FT%T, %t0, %t1 elapsed]>.  The formats C<%t0> and C<%t1>
-are replaced with the cumulative time and the time since the last test result,
-respectively.  A single space is always prefixed to the time stamp, to
-separate it from the test result.
+default value is C<[%Y-%m-%dT%H:%M:%S, %t0, %t1 elapsed]>.  The formats C<%t0>
+and C<%t1> are replaced with the cumulative time and the time since the last
+test result, respectively.  A single space is always prefixed to the time
+stamp, to separate it from the test result.
 
 =head1 AUTHOR
 
