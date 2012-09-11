@@ -5,7 +5,7 @@ use strict;
 use Time::HiRes qw( gettimeofday tv_interval );
 use POSIX qw( strftime );
 
-our $VERSION = '0.01_01';
+our $VERSION = '0.02';
 
 sub new {
     my $class = shift;
@@ -48,7 +48,7 @@ TAP::Formatter::Elapsed - Display time taken for each test
 
 =head1 VERSION
 
-This document describes version 0.01_01 of C<TAP::Formatter::Elapsed>
+This document describes version 0.02 of C<TAP::Formatter::Elapsed>
 
 =head1 SYNOPSIS
 
